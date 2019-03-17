@@ -23,10 +23,14 @@ class BaiDuAPI(object):
         images = self.get_file_content(filepath)
         alltexts = self.client.plantDetect(images)
         text = alltexts.get('result', '')
-        #name = text.get('name','')
-        return text
-        #print(name)
+        print(text)
+        name = []
+        for word in alltexts['result']:
+            name.append(word['name'])
+        text = alltexts.get('result', '')
+        return name
 
 if __name__ == '__main__':
     baiduapi = BaiDuAPI('passwd.ini')
+    #baiduapi.picture2Name('plant.png')
     print(baiduapi.picture2Name('plant.png'))
