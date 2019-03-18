@@ -2,6 +2,7 @@ import sys
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+from baidu import BaiDuAPI
 
 class filedialogdemo(QWidget):
 
@@ -9,6 +10,7 @@ class filedialogdemo(QWidget):
         super(filedialogdemo, self).__init__(parent)
         layout = QVBoxLayout()
 
+        self.filepath=None
         # Create a button in the window
         #self.button = QPushButton('Show text', self)
         #self.button.move(10, 50)
@@ -20,9 +22,9 @@ class filedialogdemo(QWidget):
 
         #QWidget().resize(620, 240)
         # Create textbox
-        self.textbox = QLineEdit(self)
-        self.textbox.move(10, 75)
-        self.textbox.resize(280, 20)
+        #self.textbox = QLineEdit(self)
+        #self.textbox.move(10, 75)
+        #self.textbox.resize(280, 20)
         #layout.addWidget(self.resize)
 
         # connect button to function on_click
@@ -48,16 +50,20 @@ class filedialogdemo(QWidget):
         fname, _ = QFileDialog.getOpenFileName(self, '选择图片', 'F:\github_repository\python-deep-learning-basics', 'Image files(*.jpg *.gif *.png)')
         self.label.setPixmap(QPixmap(fname))
         self.filepath = fname
-        print(self.filepath)
+        #print(self.filepath)
         return self.filepath
 
     @pyqtSlot()
     def on_click(self):
-        textboxValue = self.textbox.text()
+        #textboxValue = self.textbox.text()
         #QMessageBox.question(self, 'Message', "这是: " + textboxValue, QMessageBox.Ok, QMessageBox.Ok)
-        QMessageBox.question(self, 'Message', "这是: " + textboxValue)
-        self.textbox.setText("")
-        return textboxValue
+        #QMessageBox.question(self, 'Message', "这是: " + textboxValue)
+        #self.textbox.setText("")
+        #print(self.filepath)
+        baiduapi = BaiDuAPI('passwd.ini')
+        # plant.png
+        QMessageBox.question(self, '植物名称', "This is: " + baiduapi.picture2Name(self.filepath)[0], QMessageBox.Ok,QMessageBox.Ok)
+        #return textboxValue
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
